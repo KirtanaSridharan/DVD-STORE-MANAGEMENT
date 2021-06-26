@@ -3,9 +3,10 @@
 #include <iomanip>
 #include <string>
 
-#define DVD_FILENAME "dvd-list.txt"
 
 using namespace std;
+
+#define DVD_FILENAME "dvd-list.txt"
 
 fstream DVD_FILE;
 
@@ -15,6 +16,9 @@ class DVD {
   public:
     void open(ios_base::openmode mode);
     void read();
+    void pack();
+    void unpack();
+    void display();
     void printRecord();
 };
 
@@ -41,12 +45,41 @@ void DVD::read() {
   cin >> price;
 }
 
+void DVD::pack(){
+  read();
+  string record = id + "|" + title + "|" + genre + "|" + release_date + "|" + quantity + "|" + price + "|";
+  DVD_FILE << record <<"\n"; 
+}
+
+void DVD::unpack(){
+  string extra;
+  getline(DVD_FILE, id, '|');
+  getline(DVD_FILE, title, '|');
+  getline(DVD_FILE, genre, '|');
+  getline(DVD_FILE, release_date, '|');
+  getline(DVD_FILE, quantity, '|');
+  getline(DVD_FILE, price, '|');
+  getline(DVD_FILE, extra, '\n');
+  
+}
+
 void DVD::printRecord() {
   cout << setw(5) << id << setw(30) << title << setw(20)
     << genre << setw(15) << release_date << setw(6) << quantity
     << setw(10) << price << "\n";
 }
 
+void DVD::display(){
+  cout << setw(5) << "ID" << setw(30) << "TITLE" << setw(20)
+    << "GENRE" << setw(15) << "RELEASE DATE" << setw(6) << "QUANTITY"
+    << setw(10) << "PRICE" << "\n";
+
+    while(true){
+      unpack();
+      if(DVD_FILE.eof())  break;
+      printRecord();
+    }
+}
 
 int main() {
   cout << setiosflags(ios::left);
@@ -61,12 +94,12 @@ int main() {
     switch (choice) {
       case 1:
         dvd.open(ios::out | ios::app);
-        // dvd.pack();
+        dvd.pack();
         break;
       
       case 2:
         dvd.open(ios::in);
-        // dvd.display();
+        dvd.display();
         break;
       
       case 3:

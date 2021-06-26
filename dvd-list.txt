@@ -1,0 +1,23 @@
+1|Iron Man|Action, Adventure, Sci-Fi|2008|10|1000|
+2|The Incredible Hulk|Action, Adventure, Sci-Fi|2008|5|500|
+3|Iron Man 2|Action, Adventure, Sci-Fi|2010|10|1000|
+4|Thor|Action, Adventure, Fantasy|2011|8|800|
+5|Captain America: The First Avenger|Action, Adventure, Sci-Fi|2011|12|1200|
+6|The Avengers|Action, Adventure, Sci-Fi|2012|15|1500|
+7|Iron Man 3|Action, Adventure, Sci-Fi|2013|10|1000|
+8|Thor: The Dark World|Action, Adventure, Fantasy|2013|8|800|
+9|Captain America: The Winter Soldier|Action, Adventure, Sci-Fi|2014|12|1200|
+10|Guardians of the Galaxy|Action, Adventure, Comedy|2014|6|600|
+11|Avengers: Age of Ultron|Action, Adventure, Sci-Fi|2015|15|1500|
+12|Ant-Man|Action, Adventure, Comedy|2015|5|500|
+13|Captain America: Civil War|Action, Adventure, Sci-Fi|2016|12|1200|
+14|Doctor Strange|Action, Adventure, Fantasy|2016|8|800|
+15|Guardians of the Galaxy Vol. 2|Action, Adventure, Comedy|2017|6|600|
+16|Spider-Man: Homecoming|Action, Adventure, Sci-Fi|2017|7|700|
+17|Thor: Ragnarok|Action, Adventure, Comedy|2017|8|800|
+18|Black Panther|Action, Adventure, Sci-Fi|2018|9|900|
+19|Avengers: Infinity War|Action, Adventure, Sci-Fi|2018|20|2000|
+20|Ant-Man and the Wasp|Action, Adventure, Comedy|2018|5|500|
+21|Captain Marvel|Action, Adventure, Sci-Fi|2019|8|800|
+22|Avengers: Endgame|Action, Adventure, Drama|2019|25|2500|
+23|Spider-Man: Far from Home|Action, Adventure, Sci-Fi|2019|7|700|

@@ -3,7 +3,6 @@
 #include <iomanip>
 #include <string>
 
-
 using namespace std;
 
 #define DVD_FILENAME "dvd-list.txt"
@@ -11,7 +10,7 @@ using namespace std;
 fstream DVD_FILE;
 
 class DVD {
-  private: string id, title, genre, release_date, quantity, price;
+  private: string id, title, genre, year, quantity, price;
 
   public:
     void open(ios_base::openmode mode);
@@ -37,26 +36,26 @@ void DVD::read() {
   getline(cin >> ws, title);
   cout << "Enter genre: ";
   getline(cin >> ws, genre);
-  cout << "Enter release_date: ";
-  cin >> release_date;
+  cout << "Enter year: ";
+  cin >> year;
   cout << "Enter quantity: ";
   cin >> quantity;
   cout << "Enter price: ";
   cin >> price;
 }
 
-void DVD::pack(){
+void DVD::pack() {
   read();
-  string record = id + "|" + title + "|" + genre + "|" + release_date + "|" + quantity + "|" + price + "|";
-  DVD_FILE << record <<"\n"; 
+  string record = id + "|" + title + "|" + genre + "|" + year + "|" + quantity + "|" + price + "|";
+  DVD_FILE << record << "\n"; 
 }
 
-void DVD::unpack(){
+void DVD::unpack() {
   string extra;
   getline(DVD_FILE, id, '|');
   getline(DVD_FILE, title, '|');
   getline(DVD_FILE, genre, '|');
-  getline(DVD_FILE, release_date, '|');
+  getline(DVD_FILE, year, '|');
   getline(DVD_FILE, quantity, '|');
   getline(DVD_FILE, price, '|');
   getline(DVD_FILE, extra, '\n');
@@ -64,26 +63,25 @@ void DVD::unpack(){
 }
 
 void DVD::printRecord() {
-  cout << setw(5) << id << setw(30) << title << setw(20)
-    << genre << setw(15) << release_date << setw(6) << quantity
+  cout << setw(5) << id << setw(50) << title << setw(40)
+    << genre << setw(8) << year << setw(10) << quantity
     << setw(10) << price << "\n";
 }
 
-void DVD::display(){
-  cout << setw(5) << "ID" << setw(30) << "TITLE" << setw(20)
-    << "GENRE" << setw(15) << "RELEASE DATE" << setw(6) << "QUANTITY"
+void DVD::display() {
+  cout << setw(5) << "ID" << setw(50) << "TITLE" << setw(40)
+    << "GENRE" << setw(8) << "YEAR" << setw(10) << "QUANTITY"
     << setw(10) << "PRICE" << "\n";
 
-    while(true){
+    while (true) {
       unpack();
-      if(DVD_FILE.eof())  break;
+      if (DVD_FILE.eof()) break;
       printRecord();
     }
 }
 
 int main() {
   cout << setiosflags(ios::left);
-  fstream DVD_FILE;
   DVD dvd;
   int choice;
   do {

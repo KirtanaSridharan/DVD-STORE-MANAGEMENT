@@ -1,0 +1,162 @@
+1
+1
+Iron Man
+Action, Adventure, Sci-Fi
+2008
+10
+1000
+1
+2
+The Incredible Hulk
+Action, Adventure, Sci-Fi
+2008
+5
+500
+1
+3
+Iron Man 2
+Action, Adventure, Sci-Fi
+2010
+10
+1000
+1
+4
+Thor
+Action, Adventure, Fantasy
+2011
+8
+800
+1
+5
+Captain America: The First Avenger
+Action, Adventure, Sci-Fi
+2011
+12
+1200
+1
+6
+The Avengers
+Action, Adventure, Sci-Fi
+2012
+15
+1500
+1
+7
+Iron Man 3
+Action, Adventure, Sci-Fi
+2013
+10
+1000
+1
+8
+Thor: The Dark World
+Action, Adventure, Fantasy
+2013
+8
+800
+1
+9
+Captain America: The Winter Soldier
+Action, Adventure, Sci-Fi
+2014
+12
+1200
+1
+10
+Guardians of the Galaxy
+Action, Adventure, Comedy
+2014
+6
+600
+1
+11
+Avengers: Age of Ultron
+Action, Adventure, Sci-Fi
+2015
+15
+1500
+1
+12
+Ant-Man
+Action, Adventure, Comedy
+2015
+5
+500
+1
+13
+Captain America: Civil War
+Action, Adventure, Sci-Fi
+2016
+12
+1200
+1
+14
+Doctor Strange
+Action, Adventure, Fantasy
+2016
+8
+800
+1
+15
+Guardians of the Galaxy Vol. 2
+Action, Adventure, Comedy
+2017
+6
+600
+1
+16
+Spider-Man: Homecoming
+Action, Adventure, Sci-Fi
+2017
+7
+700
+1
+17
+Thor: Ragnarok
+Action, Adventure, Comedy
+2017
+8
+800
+1
+18
+Black Panther
+Action, Adventure, Sci-Fi
+2018
+9
+900
+1
+19
+Avengers: Infinity War
+Action, Adventure, Sci-Fi
+2018
+20
+2000
+1
+20
+Ant-Man and the Wasp
+Action, Adventure, Comedy
+2018
+5
+500
+1
+21
+Captain Marvel
+Action, Adventure, Sci-Fi
+2019
+8
+800
+1
+22
+Avengers: Endgame
+Action, Adventure, Drama
+2019
+25
+2500
+1
+23
+Spider-Man: Far from Home
+Action, Adventure, Sci-Fi
+2019
+7
+700
+3

@@ -13,7 +13,7 @@ class DVD {
   private: string id, title, genre, year, quantity, price;
 
   public:
-    void open(ios_base::openmode mode);
+    void opener(fstream& file, string file_name, ios_base::openmode mode);
     void read();
     void pack();
     void unpack();
@@ -21,9 +21,9 @@ class DVD {
     void printRecord();
 };
 
-void DVD::open(ios_base::openmode mode) {
-  DVD_FILE.open(DVD_FILENAME, mode);
-  if (!DVD_FILE) {
+void DVD::opener(fstream& file, string file_name, ios_base::openmode mode) {
+  file.open(file_name, mode);
+  if (!file) {
     cout << "Error opening the file.\n";
     exit(1);
   }
@@ -91,12 +91,12 @@ int main() {
 
     switch (choice) {
       case 1:
-        dvd.open(ios::out | ios::app);
+        dvd.opener(DVD_FILE, DVD_FILENAME, ios::app | ios::out);
         dvd.pack();
         break;
       
       case 2:
-        dvd.open(ios::in);
+        dvd.opener(DVD_FILE, DVD_FILENAME, ios::in);
         dvd.display();
         break;
       

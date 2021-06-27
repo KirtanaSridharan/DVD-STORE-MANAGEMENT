@@ -21,3 +21,4 @@
 21|Captain Marvel|Action, Adventure, Sci-Fi|2019|8|800|
 22|Avengers: Endgame|Action, Adventure, Drama|2019|25|2500|
 23|Spider-Man: Far from Home|Action, Adventure, Sci-Fi|2019|7|700|
+24|The Imitation Game|War/Drama|2014|10|200|

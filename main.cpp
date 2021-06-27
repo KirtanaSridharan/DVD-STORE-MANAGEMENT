@@ -5,25 +5,21 @@
 
 using namespace std;
 
-#define DVD_FILENAME "dvd-list.txt"
-
-fstream DVD_FILE;
-
 class DVD {
   private: string id, title, genre, year, quantity, price;
 
   public:
-    void opener(fstream& file, string file_name, ios_base::openmode mode);
+    void opener(fstream& file, string filename, ios_base::openmode mode);
     void read();
-    void pack();
-    void unpack();
-    void display();
+    void pack(fstream &file);
+    void unpack(fstream &file);
+    void display(fstream &file);
     void printRecord();
 };
 
-void DVD::opener(fstream& file, string file_name, ios_base::openmode mode) {
-  file.open(file_name, mode);
-  if (!file) {
+void DVD::opener(fstream& file, string filename, ios_base::openmode mode) {
+  file.open(filename, mode);
+  if (!file.is_open()) {
     cout << "Error opening the file.\n";
     exit(1);
   }
@@ -44,21 +40,21 @@ void DVD::read() {
   cin >> price;
 }
 
-void DVD::pack() {
+void DVD::pack(fstream &file) {
   read();
   string record = id + "|" + title + "|" + genre + "|" + year + "|" + quantity + "|" + price + "|";
-  DVD_FILE << record << "\n"; 
+  file << record << "\n"; 
 }
 
-void DVD::unpack() {
+void DVD::unpack(fstream &file) {
   string extra;
-  getline(DVD_FILE, id, '|');
-  getline(DVD_FILE, title, '|');
-  getline(DVD_FILE, genre, '|');
-  getline(DVD_FILE, year, '|');
-  getline(DVD_FILE, quantity, '|');
-  getline(DVD_FILE, price, '|');
-  getline(DVD_FILE, extra, '\n');
+  getline(file, id, '|');
+  getline(file, title, '|');
+  getline(file, genre, '|');
+  getline(file, year, '|');
+  getline(file, quantity, '|');
+  getline(file, price, '|');
+  getline(file, extra, '\n');
   
 }
 
@@ -68,21 +64,25 @@ void DVD::printRecord() {
     << setw(10) << price << "\n";
 }
 
-void DVD::display() {
+void DVD::display(fstream &file) {
   cout << setw(5) << "ID" << setw(50) << "TITLE" << setw(40)
     << "GENRE" << setw(8) << "YEAR" << setw(10) << "QUANTITY"
     << setw(10) << "PRICE" << "\n";
 
     while (true) {
-      unpack();
-      if (DVD_FILE.eof()) break;
+      unpack(file);
+      if (file.eof()) break;
       printRecord();
     }
 }
 
 int main() {
   cout << setiosflags(ios::left);
+
+  fstream DVD_FILE;
+  const string DVD_FILENAME = "dvd-list.txt";
   DVD dvd;
+
   int choice;
   do {
     cout << "\n1. Insert\t2. Display\t3. Exit";
@@ -91,13 +91,13 @@ int main() {
 
     switch (choice) {
       case 1:
-        dvd.opener(DVD_FILE, DVD_FILENAME, ios::app | ios::out);
-        dvd.pack();
+        dvd.opener(DVD_FILE, DVD_FILENAME, ios::out | ios::app);
+        dvd.pack(DVD_FILE);
         break;
       
       case 2:
         dvd.opener(DVD_FILE, DVD_FILENAME, ios::in);
-        dvd.display();
+        dvd.display(DVD_FILE);
         break;
       
       case 3:

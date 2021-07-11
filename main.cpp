@@ -26,7 +26,7 @@ int main() {
 
     switch (choice) {
       case 1:
-        DvdFile.Open("dvd-list.txt", ios_base::out | ios_base::app);
+        DvdFile.Open("dvd-list.txt", ios_base::out | ios_base::app | ios_base::ate);
         cout << "\nEnter the DVD details:\n";
         cin >> dvd;
         recAddr = DvdFile.Write(dvd);

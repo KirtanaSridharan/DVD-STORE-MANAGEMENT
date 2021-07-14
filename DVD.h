@@ -1,21 +1,21 @@
 class Dvd {
   public:
-    char ID[5];
-    char Title[50];
-    char Production[50];
-    char Genre[50];
-    char Year[5];
-    char Quantity[3];
-    char Price[5];
+    string ID;
+    string Title;
+    string Lang;
+    string Genre;
+    string Year;
+    string Price;
+    string Quantity;
 
     Dvd();
     void Clear();
-    int Pack(DelimFieldBuffer & buffer) const;
-    int Unpack(DelimFieldBuffer & buffer);
+    int getID();
+    void ReadFromStandardInput(BTree & tree);
+    void Pack(IOBuffer & buffer) const;
+    int Unpack(IOBuffer & buffer);
     void PrintHeadings();
     void PrintRecord();
-    // void Dvd::Read(istream & stream);
-    // void Dvd::Print(ostream & stream) const;
 };
 
 Dvd::Dvd() {
@@ -23,64 +23,91 @@ Dvd::Dvd() {
 }
 
 void Dvd::Clear() {
-  ID[0] = 0;
-  Title[0] = 0;
-  Production[0] = 0;
-  Genre[0] = 0;
-  Year[0] = 0;
-  Quantity[0] = 0;
-  Price[0] = 0;
+  ID.clear();
+  Title.clear();
+  Lang.clear();
+  Genre.clear();
+  Year.clear();
+  Price.clear();
+  Quantity.clear();
 }
 
-int Dvd::Pack(DelimFieldBuffer & buffer) const {
-  int numBytes;
+int Dvd::getID() {
+  return stoi(ID);
+}
+
+void Dvd::ReadFromStandardInput(BTree & tree) {
+  cout << "Enter the movie ID: ";
+  cin >> ID;
+
+  cout << "Enter the movie title: ";
+  cin >> ws;
+  getline(cin, Title);
+
+  cout << "Enter the language: ";
+  cin >> Lang;
+
+  cout << "Enter the movie genre(s): ";
+  cin >> ws;
+  getline(cin, Genre);
+
+  cout << "Enter the year of release: ";
+  cin >> Year;
+
+  cout << "Enter the price: ";
+  cin >> Price;
+
+  cout << "Enter the quantity: ";
+  cin >> Quantity;
+}
+
+void Dvd::Pack(IOBuffer & buffer) const {
   buffer.Clear();
-  numBytes = buffer.Pack(ID);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Title);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Production);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Genre);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Year);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Quantity);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Pack(Price);
-  if (numBytes == -1) return false;
-  return true;
+  buffer.Pack(ID);
+  buffer.Pack(Title);
+  buffer.Pack(Lang);
+  buffer.Pack(Genre);
+  buffer.Pack(Year);
+  buffer.Pack(Price);
+  buffer.Pack(Quantity);
 }
 
-int Dvd::Unpack(DelimFieldBuffer & buffer) {
+int Dvd::Unpack(IOBuffer & buffer) {
   Clear();
   int numBytes;
   numBytes = buffer.Unpack(ID);
-  if (numBytes == -1) return false;
+  if (numBytes == -1)
+    return false;
   numBytes = buffer.Unpack(Title);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Unpack(Production);
-  if (numBytes == -1) return false;
+  if (numBytes == -1)
+    return false;
+  numBytes = buffer.Unpack(Lang);
+  if (numBytes == -1)
+    return false;
   numBytes = buffer.Unpack(Genre);
-  if (numBytes == -1) return false;
+  if (numBytes == -1)
+    return false;
   numBytes = buffer.Unpack(Year);
-  if (numBytes == -1) return false;
-  numBytes = buffer.Unpack(Quantity);
-  if (numBytes == -1) return false;
+  if (numBytes == -1)
+    return false;
   numBytes = buffer.Unpack(Price);
-  if (numBytes == -1) return false;
+  if (numBytes == -1)
+    return false;
+  numBytes = buffer.Unpack(Quantity);
+  if (numBytes == -1)
+    return false;
   return true;
 }
 
 void Dvd::PrintHeadings() {
   cout << setw(5) << "ID" << setw(50) << "TITLE" << setw(20)
-    << "PRODUCTION" << setw(30) << "GENRE" << setw(6) << "YEAR"
+    << "LANGUAGE" << setw(30) << "GENRE" << setw(6) << "YEAR"
     << setw(10) << "QUANTITY" << setw(10) << "PRICE" << "\n";
 }
 
 void Dvd::PrintRecord() {
   cout << setw(5) << ID << setw(50) << Title << setw(20)
-    << Production << setw(30) << Genre << setw(6) << Year
+    << Lang << setw(30) << Genre << setw(6) << Year
     << setw(10) << Quantity << setw(10) << Price << "\n";
 }
 
@@ -90,31 +117,30 @@ istream & operator >> (istream & stream, Dvd & d) {
 
   cout << "Enter the movie title: ";
   stream >> ws;
-  stream.getline(d.Title, 50);
+  getline(stream, d.Title);
 
-  cout << "Enter the production company: ";
-  stream >> ws;
-  stream.getline(d.Production, 50);
+  cout << "Enter the language: ";
+  stream >> d.Lang;
 
   cout << "Enter the movie genre(s): ";
   stream >> ws;
-  stream.getline(d.Genre, 50);
+  getline(stream, d.Genre);
 
   cout << "Enter the year of release: ";
   stream >> d.Year;
 
-  cout << "Enter the quantity: ";
-  stream >> d.Quantity;
-
   cout << "Enter the price: ";
   stream >> d.Price;
+
+  cout << "Enter the quantity: ";
+  stream >> d.Quantity;
 
   return stream;
 }
 
 ostream & operator << (ostream & stream, Dvd d) {
   stream << "\nID: " << d.ID << "\nTitle: " << d.Title
-    << "\nProduction: " << d.Production << "\nGenre: "
+    << "\nLanguage: " << d.Lang << "\nGenre: "
     << d.Genre << "\nYear: " << d.Year << "\nQuantity: "
     << d.Quantity << "\nPrice: " << d.Price << "\n";
   return stream;

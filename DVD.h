@@ -37,8 +37,22 @@ int Dvd::getID() {
 }
 
 void Dvd::ReadFromStandardInput(BTree & tree) {
-  cout << "Enter the movie ID: ";
-  cin >> ID;
+  int c1;
+  do {
+    cout << "Enter the movie ID: ";
+    cin >> ID;
+
+    try {
+      if (tree.search(stoi(ID)) == -1) c1 = true;
+      else {
+        c1 = false;
+        cout << "\nThis ID already exists. Please enter a different one.\n";
+      }
+    } catch (invalid_argument) {
+      c1 = false;
+      cout << "\nPlease enter a numeric ID.\n";
+    }
+  } while (!c1);
 
   cout << "Enter the movie title: ";
   cin >> ws;

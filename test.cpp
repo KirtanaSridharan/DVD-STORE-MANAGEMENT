@@ -30,10 +30,14 @@ using namespace std;
 
 int main ()
 {
-  string str;
-  str = "Misran|Mohammed|Jayanagar";
-  cout << str.substr(0, 6) << "\n";
-  cout << str.substr(7, 8) << "\n";
-  cout << str.substr(16, 9) << "\n";
+  string str1, str2;
+  cout << "Enter string 1: ";
+  cin >> str1;
+  cin.ignore('\n');
+  cout << "Enter string 2: ";
+  cin >> str2;
+
+  cout << "String 1: " << str1 << " String 2: " << str2 << "\n";
+
   return 0;
 }

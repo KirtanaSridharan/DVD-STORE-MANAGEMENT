@@ -37,22 +37,16 @@ int Dvd::getID() {
 }
 
 void Dvd::ReadFromStandardInput(BTree & tree) {
-  int c1;
+
+  cout << CYAN;
+  int valid, temp;
   do {
     cout << "Enter the movie ID: ";
     cin >> ID;
-
-    try {
-      if (tree.search(stoi(ID)) == -1) c1 = true;
-      else {
-        c1 = false;
-        cout << "\nThis ID already exists. Please enter a different one.\n";
-      }
-    } catch (invalid_argument) {
-      c1 = false;
-      cout << "\nPlease enter a numeric ID.\n";
-    }
-  } while (!c1);
+    cin.sync();
+    valid = validateID(tree, ID);
+    if (!valid) cout << "\nInvalid ID. Please try again.\n";
+  } while (!valid);
 
   cout << "Enter the movie title: ";
   cin >> ws;
@@ -60,19 +54,36 @@ void Dvd::ReadFromStandardInput(BTree & tree) {
 
   cout << "Enter the language: ";
   cin >> Lang;
+  cin.sync();
 
   cout << "Enter the movie genre(s): ";
   cin >> ws;
   getline(cin, Genre);
 
-  cout << "Enter the year of release: ";
-  cin >> Year;
+  do {
+    cout << "Enter the year of release: ";
+    cin >> Year;
+    cin.sync();
+    valid = validateField('Y', Year);
+    if (!valid) cout << "\nPlease enter a valid year.\n";
+  } while (!valid);
 
-  cout << "Enter the price: ";
-  cin >> Price;
+  do {
+    cout << "Enter the price: ";
+    cin >> Price;
+    cin.sync();
+    valid = validateField('P', Price);
+    if (!valid) cout << "\nPlease enter a valid price.\n";
+  } while (!valid);
 
-  cout << "Enter the quantity: ";
-  cin >> Quantity;
+  do {
+    cout << "Enter the quantity: ";
+    cin >> Quantity;
+    cin.sync();
+    valid = validateField('Q', Quantity);
+    if (!valid) cout << "\nPlease enter a valid number.\n";
+  } while (!valid);
+  cout << RESET;
 }
 
 void Dvd::Pack(IOBuffer & buffer) const {
@@ -114,42 +125,19 @@ int Dvd::Unpack(IOBuffer & buffer) {
 }
 
 void Dvd::PrintHeadings() {
+  cout << BLUE;
+  cout << string(140, '-') << "\n";
   cout << setw(5) << "ID" << setw(50) << "TITLE" << setw(20)
     << "LANGUAGE" << setw(30) << "GENRE" << setw(6) << "YEAR"
     << setw(10) << "QUANTITY" << setw(10) << "PRICE" << "\n";
+  cout << string(140, '-') << "\n"; 
+  cout << RESET;
 }
 
 void Dvd::PrintRecord() {
   cout << setw(5) << ID << setw(50) << Title << setw(20)
     << Lang << setw(30) << Genre << setw(6) << Year
     << setw(10) << Quantity << setw(10) << Price << "\n";
-}
-
-istream & operator >> (istream & stream, Dvd & d) {
-  cout << "Enter the movie ID: ";
-  stream >> d.ID;
-
-  cout << "Enter the movie title: ";
-  stream >> ws;
-  getline(stream, d.Title);
-
-  cout << "Enter the language: ";
-  stream >> d.Lang;
-
-  cout << "Enter the movie genre(s): ";
-  stream >> ws;
-  getline(stream, d.Genre);
-
-  cout << "Enter the year of release: ";
-  stream >> d.Year;
-
-  cout << "Enter the price: ";
-  stream >> d.Price;
-
-  cout << "Enter the quantity: ";
-  stream >> d.Quantity;
-
-  return stream;
 }
 
 ostream & operator << (ostream & stream, Dvd d) {

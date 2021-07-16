@@ -15,6 +15,7 @@ class Dvd {
     void Pack(IOBuffer & buffer) const;
     int Unpack(IOBuffer & buffer);
     void PrintHeadings();
+    void ModifyRecord();
     void PrintRecord();
 };
 
@@ -146,4 +147,35 @@ ostream & operator << (ostream & stream, Dvd d) {
     << d.Genre << "\nYear: " << d.Year << "\nQuantity: "
     << d.Quantity << "\nPrice: " << d.Price << "\n";
   return stream;
+}
+
+
+void Dvd::ModifyRecord(){
+  string temp;
+  int choice;
+  do{
+    cout<<*this<<"\n";
+    cout<< "Which field would you like to modify?\n";
+    cout << "1. ID\t2. Title\t3. Language\t4. Genre\t5. Year\t6. Quantity\t7. Price\t8. Back to main menu";
+    cout<< "\nEnter the field no. : ";
+    cin >> choice;
+    if(choice>0 && choice<8){
+      cout<<"\nEnter the new value: ";
+      cin >> ws;
+      getline(cin, temp);
+    }
+    
+    switch(choice){
+      case 1:  ID = temp;  break;
+      case 2:  Title = temp;  break;
+      case 3:  Lang = temp;  break;
+      case 4:  Genre = temp;  break;
+      case 5:  Year = temp;  break;
+      case 6:  Quantity = temp;  break;
+      case 7:  Price = temp;  break;
+      case 8: cout<<"\nApplying modifications..."; break;
+      default: cout<<"Invalid choice. Please enter again." ;
+    }
+
+  }while(choice!=8);
 }

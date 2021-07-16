@@ -55,15 +55,15 @@ void displayAllDvdRecordsSortedById(RecordFile<Dvd> & File, Dvd & dvd, BTree & t
 }
 
 int searchDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
-  cout << "\nSearching based on ID...\n\n";
+  cout << BLUE << ITALIC << "\nSearching based on ID...\n\n" << RESET;
   int result = tree.search(key);
   if (result == -1) 
-    cout << "\nRecord not found.\n";
+    cout << GREEN <<"\nRecord not found.\n" << RESET;
   else {
     File.Open(ios_base::in);
     File.Read(dvd, result);
     File.Close();
-    cout << "\nRecord found.\n";
+    cout << GREEN << "\nRecord found.\n" << RESET;
     cout << dvd << "\n";
   }
   return result;
@@ -72,7 +72,7 @@ int searchDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
 int removeDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
   int recAddr = searchDvdRecord(key, File, dvd, tree);
   if (recAddr != -1) {
-    cout << "\nAre you sure you want to delete the record? [y/n]\n";
+    cout << BLUE << ITALIC << "\nAre you sure you want to delete the record? [y/n]\n" << RESET;
     char ch;
     cin >> ch;
 
@@ -81,7 +81,7 @@ int removeDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
       File.MarkAsDeleted(recAddr);
       File.Close();
       tree.remove(key);
-      cout << "\nRecord deleted successfully.\n";
+      cout << GREEN << "\nRecord deleted successfully.\n" << RESET;
     }
     else return -1;
   }
@@ -97,10 +97,11 @@ int modifyDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
     File.Close();
     tree.remove(key);
 
-    dvd.ReadFromStandardInput(tree);
+    dvd.ModifyRecord();
+    
     File.Open(ios_base::out | ios_base::app | ios_base::ate);
     result = File.Write(dvd);
-    cout << "Modified record written at address " << result << "\n";
+    cout << GREEN << "Modified record written at address " << result << "\n" << RESET;
     File.Close();
     tree.insert(dvd.getID(), result);
     return result;
@@ -193,7 +194,7 @@ int main() {
         break;
 
       case 8:
-        cout << "\nProgram terminated.\n";
+        cout <<GREEN << "\nProgram terminated.\n"<<RESET;
         break;
       
       default:
@@ -202,7 +203,7 @@ int main() {
   } while (choice != 8);
 
   if (rewriteFlag) {
-    cout << BLUE << "\nRewriting Index File....\n";
+    cout << BLUE << ITALIC "\nRewriting Index File....\n" << RESET;
     BTreeIndexFile.Open(ios_base::out);
     BTreeIndexFile.Write(tree);
     BTreeIndexFile.Close();

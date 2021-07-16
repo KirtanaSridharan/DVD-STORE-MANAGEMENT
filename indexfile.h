@@ -31,6 +31,5 @@ void IndexFile::Write(BTree & tree) {
     index.setIndex(node.first, node.second);
     index.Pack(Buffer);
     result = BufferFile::Write();
-    cout << "Index written at address " << result << "\n";
   }
 }

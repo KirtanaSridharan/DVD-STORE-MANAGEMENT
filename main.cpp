@@ -8,8 +8,10 @@
 
 using namespace std;
 
+#include "color.h"
 #include "btreenode.h"
 #include "btree.h"
+#include "utils.h"
 #include "iobuffer.h"
 #include "dvd.h"
 #include "index.h"
@@ -19,10 +21,10 @@ using namespace std;
 
 void addNewDvdRecord(RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
   File.Open(ios_base::out | ios_base::app | ios_base::ate);
-  cout << "\nEnter the DVD details:\n";
+  cout << "\nEnter the DVD details:\n\n";
   dvd.ReadFromStandardInput(tree);
   int recAddr = File.Write(dvd);
-  cout << "New record written at address " << recAddr << "\n";
+  cout << GREEN << "\nNew record written at address " << recAddr << "\n";
   File.Close();
   tree.insert(dvd.getID(), recAddr);
 }
@@ -35,6 +37,7 @@ void displayAllDvdRecordsEntrySequenced(RecordFile<Dvd> & File, Dvd & dvd) {
     if (File.Read(dvd) == -1) break;
     if (dvd.ID[0] != '$') dvd.PrintRecord();
   }
+  cout << BLUE << string(140, '-') << "\n" << RESET;
   File.Close();
 }
 
@@ -42,10 +45,12 @@ void displayAllDvdRecordsSortedById(RecordFile<Dvd> & File, Dvd & dvd, BTree & t
   File.Open(ios_base::in);
   cout << "\nDVD Records - Sorted by ID:\n\n";
   vector<pair<int, int>> nodes = tree.fetchAll();
+  dvd.PrintHeadings();
   for (auto node: nodes) {
     if (File.Read(dvd, node.second) == -1) break;
     dvd.PrintRecord();
   }
+  cout << BLUE << string(140, '-') << "\n" << RESET;
   File.Close();
 }
 
@@ -83,10 +88,46 @@ int removeDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
   return recAddr;
 }
 
+int modifyDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
+  int recAddr = searchDvdRecord(key, File, dvd, tree);
+  int result;
+  if (recAddr != -1) {
+    File.Open(ios_base::in | ios_base::out);
+    File.MarkAsDeleted(recAddr);
+    File.Close();
+    tree.remove(key);
+
+    dvd.ReadFromStandardInput(tree);
+    File.Open(ios_base::out | ios_base::app | ios_base::ate);
+    result = File.Write(dvd);
+    cout << "Modified record written at address " << result << "\n";
+    File.Close();
+    tree.insert(dvd.getID(), result);
+    return result;
+  }
+  return recAddr;
+}
+
 void treeTraversal(BTree & tree) {
   vector<pair<int, int>> nodes = tree.fetchAll();
   for (auto node: nodes)
     cout << "Key = " << node.first << " Record Address = " << node.second << "\n";
+}
+
+void printMenu() {
+  cout << ITALIC;
+  cout << YELLOW;
+  cout << "\n" << string(40, '_') << "\n";
+  cout << "\n1. Insert";
+  cout << "\n2. Display (Entry-Sequenced)";
+  cout << "\n3. Display (Sorted by ID)";
+  cout << "\n4. Search by ID";
+  cout << "\n5. Delete by ID";
+  cout << "\n6. Modify by ID";
+  cout << "\n7. Traverse the BTree";
+  cout << "\n8. Exit the program";
+  cout << "\n" << string(40, '_') << "\n";
+  cout << RESET;
 }
 
 // Main function
@@ -109,7 +150,7 @@ int main() {
   BTreeIndexFile.Close();
 
   do {
-    cout << "\n1. Insert\n2. Display (Entry-Sequenced)\n3. Display (Sorted by ID)\n4. Search\n5. Delete \n6. Tree Traversal\n7. Exit";
+    printMenu();
     cout << "\nEnter your choice: ";
     cin >> choice;
 
@@ -139,24 +180,33 @@ int main() {
         if (removeDvdRecord(key, DvdFile, dvd, tree) != -1)
           rewriteFlag = true;
         break;
-      
+
       case 6:
+        cout << "\nEnter the key to be modified: ";
+        cin >> key;
+        if (modifyDvdRecord(key, DvdFile, dvd, tree) != -1)
+          rewriteFlag = true;
+        break;
+      
+      case 7:
         treeTraversal(tree);
         break;
 
-      case 7:
+      case 8:
         cout << "\nProgram terminated.\n";
         break;
       
       default:
         cout << "\nInvalid choice. Please try again!\n";
     }
-  } while (choice != 7);
+  } while (choice != 8);
 
   if (rewriteFlag) {
+    cout << BLUE << "\nRewriting Index File....\n";
     BTreeIndexFile.Open(ios_base::out);
     BTreeIndexFile.Write(tree);
     BTreeIndexFile.Close();
+    cout << GREEN << "\nSuccess!\n" << RESET;
   }
 
   return 0;

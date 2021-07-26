@@ -119,7 +119,7 @@ void printMenu() {
   cout << ITALIC;
   cout << YELLOW;
   cout << "\n" << string(40, '_') << "\n";
-  cout << "\n1. Insert";
+  cout << "\n1. Insert new DVD Record";
   cout << "\n2. Display (Entry-Sequenced)";
   cout << "\n3. Display (Sorted by ID)";
   cout << "\n4. Search by ID";

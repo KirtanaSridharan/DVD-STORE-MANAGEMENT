@@ -111,8 +111,16 @@ int modifyDvdRecord(int key, RecordFile<Dvd> & File, Dvd & dvd, BTree & tree) {
 
 void treeTraversal(BTree & tree) {
   vector<pair<int, int>> nodes = tree.fetchAll();
+  cout << BLUE;
+  cout << string(30, '-') << "\n";
+  cout << setw(10) << "KEY" << setw(15) << "REC ADDR" << "\n";
+  cout << string(30, '-') << "\n";
+  cout << RESET;
   for (auto node: nodes)
-    cout << "Key = " << node.first << " Record Address = " << node.second << "\n";
+    cout << setw(10) << node.first << setw(20) << node.second << "\n";
+  cout << BLUE;
+  cout << string(30, '-') << "\n";
+  cout << RESET;
 }
 
 void printMenu() {

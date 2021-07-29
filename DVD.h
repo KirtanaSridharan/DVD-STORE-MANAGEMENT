@@ -11,12 +11,19 @@ class Dvd {
     Dvd();
     void Clear();
     int getID();
-    void ReadFromStandardInput(BTree & tree);
+    void readID(BTree tree);
+    void readTitle();
+    void readLang();
+    void readGenre();
+    void readYear();
+    void readPrice();
+    void readQuantity();
+    void ReadFromStandardInput(BTree tree);
     void Pack(IOBuffer & buffer) const;
     int Unpack(IOBuffer & buffer);
     void PrintHeadings();
-    void ModifyRecord();
     void PrintRecord();
+    void ModifyRecord();
 };
 
 Dvd::Dvd() {
@@ -37,53 +44,76 @@ int Dvd::getID() {
   return stoi(ID);
 }
 
-void Dvd::ReadFromStandardInput(BTree & tree) {
-
-  cout << CYAN;
-  int valid, temp;
+void Dvd::readID(BTree tree) {
+  int valid;
   do {
-    cout << "Enter the movie ID: ";
+    cout << setw(35) << "Enter the movie ID: ";
     cin >> ID;
     cin.sync();
     valid = validateID(tree, ID);
-    if (!valid) cout << "\nInvalid ID. Please try again.\n";
   } while (!valid);
+}
 
-  cout << "Enter the movie title: ";
+void Dvd::readTitle() {
+  cout << setw(35) << "Enter the movie title: ";
   cin >> ws;
   getline(cin, Title);
+}
 
-  cout << "Enter the language: ";
+void Dvd::readLang() {
+  cout << setw(35) << "Enter the language: ";
   cin >> Lang;
   cin.sync();
+}
 
-  cout << "Enter the movie genre(s): ";
+void Dvd::readGenre() {
+  cout << setw(35) << "Enter the genre: ";
   cin >> ws;
   getline(cin, Genre);
+}
 
+void Dvd::readYear() {
+  int valid;
   do {
-    cout << "Enter the year of release: ";
+    cout << setw(35) << "Enter the year [1950 - 2021]: ";
     cin >> Year;
     cin.sync();
     valid = validateField('Y', Year);
-    if (!valid) cout << "\nPlease enter a valid year.\n";
+    if (!valid) cout << RED << "\nPlease enter a valid year.\n\n" << CYAN;
   } while (!valid);
+}
 
+void Dvd::readPrice() {
+  int valid;
   do {
-    cout << "Enter the price: ";
+    cout << setw(35) << "Enter the price [200 - 5000]: ";
     cin >> Price;
     cin.sync();
     valid = validateField('P', Price);
-    if (!valid) cout << "\nPlease enter a valid price.\n";
+    if (!valid) cout << RED << "\nPlease enter a valid price.\n\n" << CYAN;
   } while (!valid);
+}
 
+void Dvd::readQuantity() {
+  int valid;
   do {
-    cout << "Enter the quantity: ";
+    cout << setw(35) << "Enter the quantity [0 - 10]: ";
     cin >> Quantity;
     cin.sync();
     valid = validateField('Q', Quantity);
-    if (!valid) cout << "\nPlease enter a valid number.\n";
+    if (!valid) cout << RED << "\nPlease enter a valid quantity.\n\n" << CYAN;
   } while (!valid);
+}
+
+void Dvd::ReadFromStandardInput(BTree tree) {
+  cout << CYAN;
+  readID(tree);
+  readTitle();
+  readLang();
+  readGenre();
+  readYear();
+  readPrice();
+  readQuantity();
   cout << RESET;
 }
 
@@ -142,40 +172,41 @@ void Dvd::PrintRecord() {
 }
 
 ostream & operator << (ostream & stream, Dvd d) {
-  stream << "\nID: " << d.ID << "\nTitle: " << d.Title
-    << "\nLanguage: " << d.Lang << "\nGenre: "
-    << d.Genre << "\nYear: " << d.Year << "\nQuantity: "
-    << d.Quantity << "\nPrice: " << d.Price << "\n";
+  stream << BOLD << setw(15) <<  "ID: " << RESET << setw(50) << d.ID << "\n";
+  stream << BOLD << setw(15) << "Title: " << RESET << setw(50) << d.Title << "\n";
+  stream << BOLD << setw(15) << "Language: " << RESET << setw(50) << d.Lang << "\n";
+  stream << BOLD << setw(15) << "Genre: " << RESET << setw(50) << d.Genre << "\n";
+  stream << BOLD << setw(15) << "Year: " << RESET << setw(50) << d.Year << "\n";
+  stream << BOLD << setw(15) << "Price: " << RESET << setw(50) << d.Price << "\n";
+  stream << BOLD << setw(15) << "Quantity: " << RESET << setw(50) << d.Quantity << "\n";
   return stream;
 }
 
-
-void Dvd::ModifyRecord(){
-  string temp;
+void Dvd::ModifyRecord() {
   int choice;
-  do{
-    cout<<*this<<"\n";
-    cout<< "Which field would you like to modify?\n";
-    cout << "1. ID\t2. Title\t3. Language\t4. Genre\t5. Year\t6. Quantity\t7. Price\t8. Back to main menu";
-    cout<< "\nEnter the field no. : ";
+  do {
+    cout << BLUE << "\nWhich field would you like to modify?\n" << RESET;
+    cout << setw(25) << "1. Title" << setw(50) << Title << "\n";
+    cout << setw(25) << "2. Language" << setw(50) << Lang << "\n";
+    cout << setw(25) << "3. Genre" << setw(50) << Genre << "\n";
+    cout << setw(25) << "4. Year" << setw(50) << Year << "\n";
+    cout << setw(25) << "5. Price" << setw(50) << Price << "\n";
+    cout << setw(25) << "6. Quantity" << setw(50) << Quantity << "\n";
+    cout << "\n7. Apply Changes\n";
+    cout << "\nEnter the choice : ";
     cin >> choice;
-    if(choice>0 && choice<8){
-      cout<<"\nEnter the new value: ";
-      cin >> ws;
-      getline(cin, temp);
-    }
-    
+    cout << CYAN;
     switch(choice){
-      case 1:  ID = temp;  break;
-      case 2:  Title = temp;  break;
-      case 3:  Lang = temp;  break;
-      case 4:  Genre = temp;  break;
-      case 5:  Year = temp;  break;
-      case 6:  Quantity = temp;  break;
-      case 7:  Price = temp;  break;
-      case 8: cout<<"\nApplying modifications..."; break;
-      default: cout<<"Invalid choice. Please enter again." ;
+      case 1: readTitle();    break;
+      case 2: readLang();     break;
+      case 3: readGenre();    break;
+      case 4: readYear();     break;
+      case 5: readPrice();    break;
+      case 6: readQuantity(); break;
+      case 7: cout << BLUE << ITALIC << "\nApplying changes...\n"; break;
+      default: cout << RED << "Invalid choice! Please enter again." ;
     }
-
-  }while(choice!=8);
+    cout << RESET;
+  } while(choice != 7);
+  cout << RESET;
 }

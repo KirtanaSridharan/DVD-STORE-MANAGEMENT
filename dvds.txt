@@ -1,0 +1,7 @@
+1|Black Widow|English|Action, Adventure, Sci-Fi|2021|2500|2|
+2|Toofan|Hindi|Sports, Family, Drama|2021|1500|3|
+6|Iron Man|English|Action, Adventure, Sci-Fi|2008|600|4|
+4|Iron Man 2|English|Action, Adventure, Sci-Fi|2010|800|1|
+$|Thor|English|Action, Adventure, Fantasy|2011|500|2|
+3|Thor|English|Action, Adventure, Fantasy|2011|300|9|
+$|Spider-Man|English|Action, Adventure|2002|200|3|

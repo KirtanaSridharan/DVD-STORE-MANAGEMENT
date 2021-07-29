@@ -67,7 +67,7 @@ int IOBuffer::Read(istream & stream) {
     return -1;
   int recAddr = stream.tellg();
   Clear();
-  getline(stream, Buffer, '#');
+  getline(stream, Buffer, '\n');
   if (!stream.good()) {
     stream.clear();
     return -1;
@@ -78,7 +78,7 @@ int IOBuffer::Read(istream & stream) {
 
 int IOBuffer::Write(ostream & stream) const {
   int recAddr = stream.tellp();
-  stream << Buffer << '#';
+  stream << Buffer << '\n';
   if (!stream.good())
     return -1;
   return recAddr;

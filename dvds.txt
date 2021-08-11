@@ -5,3 +5,13 @@
 $|Thor|English|Action, Adventure, Fantasy|2011|500|2|
 3|Thor|English|Action, Adventure, Fantasy|2011|300|9|
 $|Spider-Man|English|Action, Adventure|2002|200|3|
+8|The Matrix|English|Action, Adventure, Sci-Fi|1999|500|3|
+5|The Suicide Squad|English|Action, Adventure|2021|3000|5|
+7|F9|English|Action, Adventure|2021|800|2|
+14|Mimi|Hindi|Comedy, Drama|2021|1000|3|
+10|Mortal Kombat|English|Action, Fantasy|2021|400|1|
+13|Godzilla vs Kong|English|Action, Sci-Fi|2021|1500|6|
+19|A Quiet Place 2|English|Horror, Thriller|2020|1000|4|
+11|Padmaavat|Hindi|Romance, Drama, Historical|2018|700|2|
+$5|Arjun Reddy|Telugu|Drama|2017|500|1|
+15|Arjun Reddy|Telugu|Romance, Drama|2017|500|1|

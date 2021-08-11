@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <utility>
 #include <iomanip>
@@ -21,6 +22,7 @@ const string REVERSED = "\x1B[7m";
 
 #include "btreenode.h"
 #include "btree.h"
+#include "btreeprinter.h"
 #include "utils.h"
 #include "iobuffer.h"
 #include "dvd.h"
@@ -157,7 +159,8 @@ int main() {
   IOBuffer RecordBuff('|');
   IOBuffer IndexBuff('|');
   Dvd dvd;
-  BTree tree(5);
+  BTree tree(2);
+  BTreePrinter printer;
   RecordFile<Dvd> DvdFile(RecordBuff, "dvds.txt");
   IndexFile BTreeIndexFile(IndexBuff, "btreeindex.txt");
 
@@ -217,6 +220,8 @@ int main() {
       
       case 7:
         treeTraversal(tree);
+        cout << "\n" << BOLD << "B TREE STRUCTURE" << RESET << "\n";
+        printer.print(tree);
         break;
 
       case 8:

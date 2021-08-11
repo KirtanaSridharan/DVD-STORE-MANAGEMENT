@@ -63,6 +63,7 @@ class BTNode {
 
   // Make BTree friend of this so that we can access private members of this class in BTree functions.
   friend class BTree;
+  friend class BTreePrinter;
 };
 
 BTNode::BTNode(int _t, bool _leaf) {
@@ -109,38 +110,26 @@ vector<pair<int, int>> BTNode::fetchAll() {
     vector<pair<int, int>> temp;
     if (!leaf)
       temp = C[i]->fetchAll();
-    
     for (auto it: temp)
       nodes.push_back(it);
-    
     nodes.push_back(make_pair(Keys[i], RecAddrs[i]));
   }
-  
   vector<pair<int, int>> temp;
   if (!leaf)
     temp = C[i]->fetchAll();
-  
   for (auto it: temp)
     nodes.push_back(it);
-  
   return nodes;
 }
 
 int BTNode::search(int key) {
-  // Find the first key greater than or equal to key
   int i = 0;
   while (i < n && key > Keys[i])
     i++;
-  
-  // If the found key is equal to key, return this node
   if (key == Keys[i])
     return RecAddrs[i];
-  
-  // If the key is not found and this is a leaf node
   if (leaf == true)
     return -1;
-  
-  // Go to the appropriate child
   return C[i]->search(key);
 }
 
